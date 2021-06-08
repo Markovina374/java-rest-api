@@ -27,8 +27,8 @@ public class CostsController {
 
 
         @GetMapping("{id}")
-        public Cost getOne(@PathVariable("id") Cost cost){
-            return cost;
+        public Cost getOne(@PathVariable("id") long id){
+            return costRepository.findById(id);
         }
 
 
@@ -41,14 +41,13 @@ public class CostsController {
         }
 
         @PutMapping("{id}")
-        public Cost update(@PathVariable("id") Cost costFromDB,
+        public Cost update(@PathVariable("id") long id,
                            @RequestBody Cost cost){
-            BeanUtils.copyProperties(cost, costFromDB, "id");
-            return costRepository.save(costFromDB);
+            return costRepository.update(id, cost);
         }
         @DeleteMapping("{id}")
-        public void delete(@PathVariable ("id") Cost cost){
-            costRepository.deleteById(cost.getId());
+        public void delete(@PathVariable("id") long id){
+            costRepository.deleteById(id);
         }
 
 

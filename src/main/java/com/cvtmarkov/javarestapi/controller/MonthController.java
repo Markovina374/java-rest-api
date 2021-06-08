@@ -1,7 +1,7 @@
 package com.cvtmarkov.javarestapi.controller;
 
 import com.cvtmarkov.javarestapi.entity.Cost;
-import com.cvtmarkov.javarestapi.repository.CostRepository;
+import com.cvtmarkov.javarestapi.repository.MonthRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,11 +16,11 @@ import java.util.List;
 @RequestMapping("rest/costs/month")
 public class MonthController {
     @Autowired
-    CostRepository costRepository;
+    MonthRepository monthRepository;
 
     @GetMapping("{month}")
     public HashMap<HashMap<String, BigDecimal>, List<Cost>> findCostsForMonth(@PathVariable("month") int month){
-        return costRepository.monthlyAmount(month);
+        return monthRepository.monthlyAmount(month);
     }
 
 }

@@ -12,4 +12,6 @@ public interface CrudRepository<T> {
 
     T save(T object);
 
+    T update(long id, T object);
+
 }

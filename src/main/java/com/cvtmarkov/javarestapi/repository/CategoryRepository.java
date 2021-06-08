@@ -9,19 +9,17 @@ import org.springframework.stereotype.Repository;
 
 import javax.annotation.Nullable;
 import java.math.BigDecimal;
-import java.math.BigInteger;
-import java.util.HashMap;
 import java.util.List;
-import java.util.stream.DoubleStream;
 
 @Repository
-public class CategoryRepository implements CrudRepository<Category>{
+public class CategoryRepository implements CrudRepository<Category> {
     @Autowired
     private final JdbcTemplate jdbcTemplate;
 
     public CategoryRepository(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
+
     @Override
     public List<Category> findAll() {
         return jdbcTemplate.query("SELECT * FROM category", new Object[]{}, new CategoryMapper());
@@ -29,18 +27,16 @@ public class CategoryRepository implements CrudRepository<Category>{
 
     @Override
     public Category findById(long id) {
-            return jdbcTemplate.query("SELECT * FROM category WHERE id = ?", new Object[]{id}, new CategoryMapper())
-                    .stream()
-                    .findAny()
-                    .orElseThrow(NotFoundException::new);
-        }
-
-
+        return jdbcTemplate.query("SELECT * FROM category WHERE id = ?", new Object[]{id}, new CategoryMapper())
+                .stream()
+                .findAny()
+                .orElseThrow(NotFoundException::new);
+    }
 
 
     @Override
     public void deleteById(long id) {
-        jdbcTemplate.update("DELETE FROM category WHERE id = ?", new Object[]{id}, new CategoryMapper());
+        jdbcTemplate.update("DELETE FROM category WHERE id = ? ", new Object[]{id}, new CategoryMapper());
     }
 
     @Override
@@ -48,5 +44,17 @@ public class CategoryRepository implements CrudRepository<Category>{
         jdbcTemplate.update("INSERT INTO category VALUES(?,?)", category.getId(), category.getName());
         return category;
     }
+
+    @Override
+    public Category update(long id, Category newCategory) {
+        newCategory.setId(id);
+        jdbcTemplate.update("UPDATE category SET name = ? WHERE id = ?", newCategory.getName(), id);
+        return newCategory;
+    }
+    public BigDecimal maxSumOfCategory(long id){
+        return jdbcTemplate.queryForObject("SELECT SUM(value) FROM cost WHERE  category_id = ?", new Object[]{id}, BigDecimal.class);
+    }
+
+
 
 }
