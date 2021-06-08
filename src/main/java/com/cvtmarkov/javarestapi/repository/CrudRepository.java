@@ -8,7 +8,7 @@ public interface CrudRepository<T> {
 
     T findById(long id);
 
-    void deleteById(long id);
+    String deleteById(long id);
 
     T save(T object);
 

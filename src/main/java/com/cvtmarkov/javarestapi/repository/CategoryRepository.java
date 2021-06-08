@@ -13,6 +13,7 @@ import java.util.List;
 
 @Repository
 public class CategoryRepository implements CrudRepository<Category> {
+
     @Autowired
     private final JdbcTemplate jdbcTemplate;
 
@@ -35,8 +36,12 @@ public class CategoryRepository implements CrudRepository<Category> {
 
 
     @Override
-    public void deleteById(long id) {
-        jdbcTemplate.update("DELETE FROM category WHERE id = ? ", new Object[]{id}, new CategoryMapper());
+    public String deleteById(long id) {
+        if (jdbcTemplate.update("DELETE FROM category WHERE id = ? ", id) == 1) {
+            return "Cost with this id = " + id + " deleted!";
+        } else {
+            return "Cost with this id = " + id + " was not found!!";
+        }
     }
 
     @Override
@@ -51,10 +56,10 @@ public class CategoryRepository implements CrudRepository<Category> {
         jdbcTemplate.update("UPDATE category SET name = ? WHERE id = ?", newCategory.getName(), id);
         return newCategory;
     }
-    public BigDecimal maxSumOfCategory(long id){
+
+    public BigDecimal maxSumOfCategory(long id) {
         return jdbcTemplate.queryForObject("SELECT SUM(value) FROM cost WHERE  category_id = ?", new Object[]{id}, BigDecimal.class);
     }
-
 
 
 }

@@ -46,8 +46,8 @@ public class CostsController {
             return costRepository.update(id, cost);
         }
         @DeleteMapping("{id}")
-        public void delete(@PathVariable("id") long id){
-            costRepository.deleteById(id);
+        public String delete(@PathVariable("id") long id){
+            return costRepository.deleteById(id);
         }
 
 

@@ -11,11 +11,11 @@ import java.util.HashMap;
 import java.util.List;
 
 @Repository
-public class MonthRepository {
+public class DateRepository {
     @Autowired
     private final JdbcTemplate jdbcTemplate;
 
-    public MonthRepository(JdbcTemplate jdbcTemplate) {
+    public DateRepository(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
 
@@ -29,7 +29,7 @@ public class MonthRepository {
     public HashMap<HashMap<String, BigDecimal>,List<Cost>> monthlyAmount (int month){
         HashMap<HashMap<String, BigDecimal>, List<Cost>> hashMap = new HashMap<>();
         HashMap<String, BigDecimal> maximumHashmap = new HashMap<>();
-        maximumHashmap.put("Sum for month:", maxSumOfMonth(month));
+        maximumHashmap.put("Sum for month", maxSumOfMonth(month));
         hashMap.put(maximumHashmap,findByMount(month));
         return hashMap;
     }

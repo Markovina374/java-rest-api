@@ -40,8 +40,12 @@ public class CostRepository implements CrudRepository<Cost>{
     }
 
     @Override
-    public void deleteById(long id) {
-        jdbcTemplate.update("DELETE FROM cost WHERE id = ?", new Object[]{id}, new CostMapper());
+    public String deleteById(long id) {
+        if(jdbcTemplate.update("DELETE FROM cost WHERE id = ?", id) == 1){
+            return "Cost with this id = "+id+" deleted!";
+        }else {
+            return "Cost with this id = "+id+" was not found";
+        }
     }
 
     @Override
