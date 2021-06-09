@@ -56,9 +56,19 @@ public class CategoryRepository implements CrudRepository<Category> {
         jdbcTemplate.update("UPDATE category SET name = ? WHERE id = ?", newCategory.getName(), id);
         return newCategory;
     }
+    public List<Integer> findCategoryByDate(int month, int day){
+        return jdbcTemplate.queryForList("SELECT DISTINCT category_id FROM cost WHERE DAY(date) = ? AND MONTH(date) = ?", new Object[]{day, month}, Integer.class);
+    }
 
     public BigDecimal maxSumOfCategory(long id) {
         return jdbcTemplate.queryForObject("SELECT SUM(value) FROM cost WHERE  category_id = ?", new Object[]{id}, BigDecimal.class);
+    }
+
+    public BigDecimal maxSumOfCategoryOfDate(long id, int month, int day ) {
+        return jdbcTemplate.queryForObject("SELECT SUM(value) FROM cost WHERE  DAY(date) = ? AND MONTH(date) = ? AND category_id = ?", new Object[]{ day, month, id}, BigDecimal.class);
+    }
+    public BigDecimal maxSumOfCategoryOfDate(int month, int day ) {
+        return jdbcTemplate.queryForObject("SELECT SUM(value) FROM cost WHERE  DAY(date) = ? AND MONTH(date) = ?", new Object[]{ day, month}, BigDecimal.class);
     }
 
 

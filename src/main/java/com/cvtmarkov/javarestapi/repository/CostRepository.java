@@ -65,6 +65,10 @@ public class CostRepository implements CrudRepository<Cost>{
         return newCost;
     }
 
+    public List<Cost> findCostFromDate (int month, int day){
+        return jdbcTemplate.query("SELECT * FROM cost WHERE DAY(date) = ? AND MONTH(date) = ?", new Object[]{day,month}, new CostMapper());
+    }
+
 
 
 

@@ -50,6 +50,12 @@ public class CostsController {
             return costRepository.deleteById(id);
         }
 
+        @GetMapping("month{month}/day{day}")
+        public List<Cost> findCostByDate (@PathVariable("month") int month, @PathVariable("day") int day){
+            return costRepository.findCostFromDate(month,day);
+        }
+
+
 
 
     }
