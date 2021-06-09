@@ -2,7 +2,7 @@ package com.cvtmarkov.javarestapi.repository;
 
 import java.util.List;
 
-public interface CrudRepository<T> {
+public interface CRUDRepository<T> {
 
     List<T> findAll();
 

@@ -16,13 +16,13 @@ import static springfox.documentation.builders.PathSelectors.regex;
 public class SwaggerConfig {
 
     @Bean
-    public Docket restApi(){
+    public Docket restApi() {
         return new Docket(DocumentationType.SWAGGER_2)
                 .select()
                 .apis(RequestHandlerSelectors.basePackage("com.cvtmarkov.javarestapi"))
-                        .paths(regex("/rest.*"))
-                        .build()
-                        .apiInfo(metaInfo());
+                .paths(regex("/rest.*"))
+                .build()
+                .apiInfo(metaInfo());
     }
 
     private ApiInfo metaInfo() {

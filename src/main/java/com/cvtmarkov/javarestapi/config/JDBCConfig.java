@@ -8,6 +8,7 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import javax.sql.DataSource;
+
 @Configuration
 @PropertySource("classpath:application.properties")
 public class JDBCConfig {
@@ -22,10 +23,12 @@ public class JDBCConfig {
     private String password;
 
     @Bean
-    JdbcTemplate jdbcTemplate(DataSource dataSource){ return new JdbcTemplate(dataSource);}
+    JdbcTemplate jdbcTemplate(DataSource dataSource) {
+        return new JdbcTemplate(dataSource);
+    }
 
     @Bean
-    DataSource dataSource(){
+    DataSource dataSource() {
         DataSourceBuilder dataSourceBuilder = DataSourceBuilder.create();
         dataSourceBuilder.driverClassName(driverClassName);
         dataSourceBuilder.url(url);

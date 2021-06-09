@@ -12,7 +12,7 @@ import java.math.BigDecimal;
 import java.util.List;
 
 @Repository
-public class CategoryRepository implements CrudRepository<Category> {
+public class CategoryRepository implements CRUDRepository<Category> {
 
     @Autowired
     private final JdbcTemplate jdbcTemplate;
@@ -38,9 +38,10 @@ public class CategoryRepository implements CrudRepository<Category> {
     @Override
     public String deleteById(long id) {
         if (jdbcTemplate.update("DELETE FROM category WHERE id = ? ", id) == 1) {
-            return "Cost with this id = " + id + " deleted!";
+            jdbcTemplate.update("DELETE FROM cost WHERE category_id IS NULL");
+            return "Category with this id = " + id + " deleted!";
         } else {
-            return "Cost with this id = " + id + " was not found!!";
+            return "Category with this id = " + id + " was not found!!";
         }
     }
 
@@ -56,19 +57,21 @@ public class CategoryRepository implements CrudRepository<Category> {
         jdbcTemplate.update("UPDATE category SET name = ? WHERE id = ?", newCategory.getName(), id);
         return newCategory;
     }
-    public List<Integer> findCategoryByDate(int month, int day){
+
+    public List<Integer> findCategoryByDate(int month, int day) {
         return jdbcTemplate.queryForList("SELECT DISTINCT category_id FROM cost WHERE DAY(date) = ? AND MONTH(date) = ?", new Object[]{day, month}, Integer.class);
     }
 
-    public BigDecimal maxSumOfCategory(long id) {
+    public BigDecimal sumOfCategory(long id) {
         return jdbcTemplate.queryForObject("SELECT SUM(value) FROM cost WHERE  category_id = ?", new Object[]{id}, BigDecimal.class);
     }
 
-    public BigDecimal maxSumOfCategoryOfDate(long id, int month, int day ) {
-        return jdbcTemplate.queryForObject("SELECT SUM(value) FROM cost WHERE  DAY(date) = ? AND MONTH(date) = ? AND category_id = ?", new Object[]{ day, month, id}, BigDecimal.class);
+    public BigDecimal sumOfCategoryOfDate(long id, int month, int day) {
+        return jdbcTemplate.queryForObject("SELECT SUM(value) FROM cost WHERE  DAY(date) = ? AND MONTH(date) = ? AND category_id = ?", new Object[]{day, month, id}, BigDecimal.class);
     }
-    public BigDecimal maxSumOfCategoryOfDate(int month, int day ) {
-        return jdbcTemplate.queryForObject("SELECT SUM(value) FROM cost WHERE  DAY(date) = ? AND MONTH(date) = ?", new Object[]{ day, month}, BigDecimal.class);
+
+    public BigDecimal sumOfCategoryOfDate(int month, int day) {
+        return jdbcTemplate.queryForObject("SELECT SUM(value) FROM cost WHERE  DAY(date) = ? AND MONTH(date) = ?", new Object[]{day, month}, BigDecimal.class);
     }
 
 

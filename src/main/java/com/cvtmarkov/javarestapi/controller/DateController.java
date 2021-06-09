@@ -27,28 +27,33 @@ public class DateController {
     }
 
     @GetMapping
-    public HashMap<String, BigDecimal>findCostsForMonth(){
+    public HashMap<String, BigDecimal> findCostsForMonth() {
         return monthService.monthlyAmount();
     }
+
     @GetMapping("listMonth")
-    public List<Integer> listMonth(){
+    public List<Integer> listMonth() {
         return dateRepository.findAllMonthsWhereExpensesWere();
     }
+
     @GetMapping("{month}")
-    public List<Integer> listDay(@PathVariable("month") int month){
+    public List<Integer> listDay(@PathVariable("month") int month) {
         return dateRepository.findAllDayWhereExpensesMonth(month);
     }
+
     @GetMapping("sum{month}/day{day}")
-    public BigDecimal listSumOfDay(@PathVariable("month")int month, @PathVariable("day")int day){
+    public BigDecimal listSumOfDay(@PathVariable("month") int month, @PathVariable("day") int day) {
         return dateRepository.maxSumOfDay(month, day);
     }
+
     @GetMapping("monthlyReport{month}")
-    public List<Report> monthlyReport(@PathVariable("month") int month){
+    public List<Report> monthlyReport(@PathVariable("month") int month) {
         return monthService.mounthDetalizedReport(month);
     }
+
     @GetMapping("sum{month}")
-    public BigDecimal maxLimitMonth(@PathVariable("month") int month){
-        return dateRepository.maxSumOfMonth(month);
+    public BigDecimal maxLimitMonth(@PathVariable("month") int month) {
+        return dateRepository.sumOfMonth(month);
     }
 
 

@@ -12,8 +12,8 @@ public class MonthLimitMapper implements RowMapper<MonthLimit> {
     public MonthLimit mapRow(ResultSet resultSet, int i) throws SQLException {
         MonthLimit monthLimit = new MonthLimit();
         monthLimit.setMonth(resultSet.getInt("numberMonth"));
-        monthLimit.setSumOfMonth(resultSet.getBigDecimal("sumOfMonth"));
-        monthLimit.setLimit(resultSet.getBigDecimal("limit"));
+        monthLimit.setSumOfMonth(resultSet.getBigDecimal("sum_of_month"));
+        monthLimit.setLimit(resultSet.getBigDecimal("limit_of_month"));
         return monthLimit;
     }
 }

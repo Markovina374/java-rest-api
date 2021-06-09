@@ -20,44 +20,43 @@ public class CategoryController {
     }
 
     @GetMapping
-    public List<Category> allCategory(){
+    public List<Category> allCategory() {
         return categoryRepository.findAll();
     }
 
 
     @GetMapping("{id}")
-    public Category getOne(@PathVariable("id") long id){
+    public Category getOne(@PathVariable("id") long id) {
         return categoryRepository.findById(id);
     }
 
 
-
     @PostMapping
-    public Category create(@RequestBody Category category ){
+    public Category create(@RequestBody Category category) {
         return categoryRepository.save(category);
     }
 
     @PutMapping("{id}")
     public Category update(@PathVariable("id") long id,
-                       @RequestBody Category category){
+                           @RequestBody Category category) {
         return categoryRepository.update(id, category);
     }
 
     @DeleteMapping("{id}")
-    public void delete(@PathVariable("id") long id){
+    public void delete(@PathVariable("id") long id) {
         categoryRepository.deleteById(id);
     }
 
     @GetMapping("{id}/sum/month{month}/day{day}")
     public BigDecimal sumOfCategoryAndDate(@PathVariable("id") long id,
-                                @PathVariable("month") int month,
-                                @PathVariable("day") int day){
-        return categoryRepository.maxSumOfCategoryOfDate(id,month,day);
+                                           @PathVariable("month") int month,
+                                           @PathVariable("day") int day) {
+        return categoryRepository.sumOfCategoryOfDate(id, month, day);
     }
 
     @GetMapping("{id}/sum")
-    public BigDecimal sumOfCategory(@PathVariable("id") long id){
-        return categoryRepository.maxSumOfCategory(id);
+    public BigDecimal sumOfCategory(@PathVariable("id") long id) {
+        return categoryRepository.sumOfCategory(id);
     }
 
 }

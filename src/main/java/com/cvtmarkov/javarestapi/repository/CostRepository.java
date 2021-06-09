@@ -1,7 +1,6 @@
 package com.cvtmarkov.javarestapi.repository;
 
 import com.cvtmarkov.javarestapi.entity.Cost;
-import com.cvtmarkov.javarestapi.entity.mappers.CategoryMapper;
 import com.cvtmarkov.javarestapi.entity.mappers.CostMapper;
 import com.cvtmarkov.javarestapi.exception.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,13 +8,10 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import javax.annotation.Nullable;
-import java.math.BigDecimal;
-import java.math.BigInteger;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
+
 @Repository
-public class CostRepository implements CrudRepository<Cost>{
+public class CostRepository implements CRUDRepository<Cost> {
 
     @Autowired
     private final JdbcTemplate jdbcTemplate;
@@ -41,10 +37,10 @@ public class CostRepository implements CrudRepository<Cost>{
 
     @Override
     public String deleteById(long id) {
-        if(jdbcTemplate.update("DELETE FROM cost WHERE id = ?", id) == 1){
-            return "Cost with this id = "+id+" deleted!";
-        }else {
-            return "Cost with this id = "+id+" was not found";
+        if (jdbcTemplate.update("DELETE FROM cost WHERE id = ?", id) == 1) {
+            return "Cost with this id = " + id + " deleted!";
+        } else {
+            return "Cost with this id = " + id + " was not found";
         }
     }
 
@@ -65,11 +61,9 @@ public class CostRepository implements CrudRepository<Cost>{
         return newCost;
     }
 
-    public List<Cost> findCostFromDate (int month, int day){
-        return jdbcTemplate.query("SELECT * FROM cost WHERE DAY(date) = ? AND MONTH(date) = ?", new Object[]{day,month}, new CostMapper());
+    public List<Cost> findCostFromDate(int month, int day) {
+        return jdbcTemplate.query("SELECT * FROM cost WHERE DAY(date) = ? AND MONTH(date) = ?", new Object[]{day, month}, new CostMapper());
     }
-
-
 
 
 }
