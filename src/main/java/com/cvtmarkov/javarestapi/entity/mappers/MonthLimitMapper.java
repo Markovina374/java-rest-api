@@ -5,7 +5,9 @@ import org.springframework.jdbc.core.RowMapper;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
+/**
+ * Сопоставление объекта "Месячный лимит" с сущностью в базе данных
+ */
 public class MonthLimitMapper implements RowMapper<MonthLimit> {
 
     @Override

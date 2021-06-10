@@ -11,6 +11,12 @@ import javax.annotation.Nullable;
 import java.math.BigDecimal;
 import java.util.List;
 
+/**
+ * Репозитория для работы с Категориями в базе данных - имплементирующая:
+ * @see CRUDRepository - интерфейс
+ * и принимающая:
+ * @see JdbcTemplate
+ */
 @Repository
 public class CategoryRepository implements CRUDRepository<Category> {
 
@@ -58,21 +64,36 @@ public class CategoryRepository implements CRUDRepository<Category> {
         return newCategory;
     }
 
+    /**
+     * Метод возвращает список id категорий в заданной дате
+     * @param month - месяц
+     * @param day - день
+     * @return - список id
+     */
     public List<Integer> findCategoryByDate(int month, int day) {
         return jdbcTemplate.queryForList("SELECT DISTINCT category_id FROM cost WHERE DAY(date) = ? AND MONTH(date) = ?", new Object[]{day, month}, Integer.class);
     }
 
+    /**
+     * Метод возвращает сумму всех расходов по заданной категории
+     * @param id - id категории
+     * @return - сумма
+     */
     public BigDecimal sumOfCategory(long id) {
         return jdbcTemplate.queryForObject("SELECT SUM(value) FROM cost WHERE  category_id = ?", new Object[]{id}, BigDecimal.class);
     }
 
+    /**
+     * Метод возвращает сумму всех расходов по заданной категории и дате
+     * @param id - id категории
+     * @param month - месяц
+     * @param day - день
+     * @return - сумма
+     */
     public BigDecimal sumOfCategoryOfDate(long id, int month, int day) {
         return jdbcTemplate.queryForObject("SELECT SUM(value) FROM cost WHERE  DAY(date) = ? AND MONTH(date) = ? AND category_id = ?", new Object[]{day, month, id}, BigDecimal.class);
     }
 
-    public BigDecimal sumOfCategoryOfDate(int month, int day) {
-        return jdbcTemplate.queryForObject("SELECT SUM(value) FROM cost WHERE  DAY(date) = ? AND MONTH(date) = ?", new Object[]{day, month}, BigDecimal.class);
-    }
 
 
 }

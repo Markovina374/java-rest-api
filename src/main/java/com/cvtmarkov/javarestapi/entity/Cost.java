@@ -6,7 +6,9 @@ import org.springframework.format.annotation.DateTimeFormat;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDate;
-
+/**
+ * Объект "Расход"
+ */
 @Data
 public class Cost implements Serializable {
     private long Id;

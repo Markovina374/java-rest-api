@@ -12,16 +12,24 @@ import org.springframework.stereotype.Repository;
 import javax.annotation.Nullable;
 import java.math.BigDecimal;
 import java.util.List;
-
+/**
+ * Репозитория для работы с Месячными расходами в базе данных - имплементирующая:
+ * @see CRUDRepository - интерфейс
+ * и принимающая:
+ * @see JdbcTemplate
+ */
 @Repository
 public class MonthLimitRepository implements CRUDRepository<MonthLimit> {
+    /**
+     * Переменная находится в файле: resources/application.properties с ключем limit.method
+     */
     @Value("${limit.method}")
     private String limitMethod;
 
     private BigDecimal valueOfLimit;
 
     @Autowired
-    ReportRepository reportRepository;
+    private ReportRepository reportRepository;
     @Autowired
     private MonthLimitService monthLimitService;
     @Autowired

@@ -9,7 +9,12 @@ import org.springframework.stereotype.Repository;
 
 import javax.annotation.Nullable;
 import java.util.List;
-
+/**
+ * Репозитория для работы с Расходами в базе данных - имплементирующая:
+ * @see CRUDRepository - интерфейс
+ * и принимающая:
+ * @see JdbcTemplate
+ */
 @Repository
 public class CostRepository implements CRUDRepository<Cost> {
 
@@ -52,6 +57,7 @@ public class CostRepository implements CRUDRepository<Cost> {
         return cost;
     }
 
+
     @Override
     public Cost update(long id, @Nullable Cost newCost) {
         newCost.setId(id);
@@ -61,6 +67,12 @@ public class CostRepository implements CRUDRepository<Cost> {
         return newCost;
     }
 
+    /**
+     * Метод возвращает список расходов по заданной дате
+     * @param month - месяц
+     * @param day - день
+     * @return - список Расходов
+     */
     public List<Cost> findCostFromDate(int month, int day) {
         return jdbcTemplate.query("SELECT * FROM cost WHERE DAY(date) = ? AND MONTH(date) = ?", new Object[]{day, month}, new CostMapper());
     }

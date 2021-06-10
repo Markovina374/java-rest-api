@@ -6,7 +6,9 @@ import org.springframework.jdbc.core.RowMapper;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
+/**
+ * Сопоставление объекта "Категория" с сущностью в базе данных
+ */
 @Data
 public class CategoryMapper implements RowMapper<Category> {
     @Override

@@ -1,7 +1,6 @@
 package com.cvtmarkov.javarestapi.controller;
 
 import com.cvtmarkov.javarestapi.entity.Report;
-import com.cvtmarkov.javarestapi.repository.ReportRepository;
 import com.cvtmarkov.javarestapi.service.ReportService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -47,7 +46,7 @@ public class ReportController {
      */
     @GetMapping("detailedReport{month}")
     public List<Report> monthlyReport(@PathVariable("month") int month) {
-        return reportService.mounthDetalizedReport(month);
+        return reportService.monthlyDetailedReport(month);
     }
 
 

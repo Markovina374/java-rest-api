@@ -11,26 +11,44 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-
+/**
+ * Сервис для работы с Месячными лимитами
+ */
 @Service
 public class MonthLimitService {
+
     @Autowired
     MonthLimitRepository monthLimitRepository;
 
-
+    /**
+     * Переменная находится в файле: resources/application.properties с ключем limit
+     */
     @Value("${limit}")
     private BigDecimal limit;
+
+    /**
+     * Переменная находится в файле: resources/application.properties с ключем limit.method
+     */
     @Value("${limit.method}")
     private String limitMethod;
 
-
+    /**
+     * Метод аналогичен getter'у возвращает значение переменной лимит который указан в проперти файле
+     * @return - лимит
+     */
     public BigDecimal getLimitFromProperty() {
         return this.limit;
     }
 
+    /**
+     * Метод проверяет на превышение месячного лимита и если он превышен -
+     * производит манипуляции с месячным лимитом согласно заданному методу действий
+     * и выводит соответствующее сообщение
+     * @param month - месяц
+     * @return - сообщение
+     */
     public String limitMethod(long month) {
         MonthLimit monthLimit = monthLimitRepository.findById(month);
-
         BigDecimal sum = monthLimit.getSumOfMonth();
         if (sum.compareTo(limit) > 0 && limitMethod.equals("adaptive")) {
             List<MonthLimit> monthLimitList = monthLimitRepository.findAll();
@@ -54,6 +72,13 @@ public class MonthLimitService {
                     "or an incorrect method was selected for processing the limit";
         }
     }
+
+    /**
+     * Метод проверяет на превышение месячного лимита всех месяцев и если он превышен -
+     *      * производит манипуляции с месячным лимитом согласно заданному методу действий
+     *      * и выводит соответствующее сообщение
+     * @return - сообщение
+     */
     public List<HashMap<String, String>> checkAllMonthForLimit(){
         List<MonthLimit> limitList = monthLimitRepository.findAll();
         List<HashMap<String, String>> hashMapList = new ArrayList<>();
