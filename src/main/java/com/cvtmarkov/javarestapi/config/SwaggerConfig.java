@@ -11,6 +11,12 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 import static springfox.documentation.builders.PathSelectors.regex;
 
+/**
+ * Класс конфигурации фреймворка Swagger - который помогает в разработке REST API и
+ * предоставляет прекрасный пользовательский интерфейс.
+ */
+
+
 @EnableSwagger2
 @Configuration
 public class SwaggerConfig {

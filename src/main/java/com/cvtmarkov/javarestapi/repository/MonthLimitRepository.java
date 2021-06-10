@@ -21,7 +21,7 @@ public class MonthLimitRepository implements CRUDRepository<MonthLimit> {
     private BigDecimal valueOfLimit;
 
     @Autowired
-    DateRepository dateRepository;
+    ReportRepository reportRepository;
     @Autowired
     private MonthLimitService monthLimitService;
     @Autowired
@@ -60,8 +60,9 @@ public class MonthLimitRepository implements CRUDRepository<MonthLimit> {
     public MonthLimit save(MonthLimit limit) {
 
         limit.setLimit(monthLimitService.getLimitFromProperty());
-        limit.setSumOfMonth(dateRepository.sumOfMonth(limit.getMonth()));
-
+        if(reportRepository.sumOfMonth(limit.getMonth())!=null) {
+            limit.setSumOfMonth(reportRepository.sumOfMonth(limit.getMonth()));
+        }
         jdbcTemplate.update("INSERT INTO month_limit VALUES(?,?,?)",
                 limit.getMonth(), limit.getSumOfMonth(), limit.getLimit());
         return limit;
@@ -74,7 +75,7 @@ public class MonthLimitRepository implements CRUDRepository<MonthLimit> {
             limit.setLimit(monthLimitService.getLimitFromProperty());
         }
         jdbcTemplate.update("UPDATE month_limit SET sum_of_month = ?, limit_of_month = ? WHERE numberMonth = ?",
-                dateRepository.sumOfMonth(limit.getMonth()), limit.getLimit(), month);
+                reportRepository.sumOfMonth(limit.getMonth()), limit.getLimit(), month);
         return limit;
     }
 

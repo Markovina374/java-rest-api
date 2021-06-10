@@ -10,6 +10,6 @@ import java.util.List;
 public class Report {
     private int day;
     private List<Cost> list;
-    private BigDecimal maxOfDay;
-    private HashMap<Integer, BigDecimal> maxOfCategory;
+    private BigDecimal sumOfDate;
+    private HashMap<Integer, BigDecimal> sumOfCategory;
 }

@@ -9,4 +9,5 @@ public class MonthLimit {
     private int month;
     private BigDecimal sumOfMonth;
     private BigDecimal limit;
+
 }

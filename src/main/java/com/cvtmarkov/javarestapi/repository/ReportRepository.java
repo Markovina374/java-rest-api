@@ -10,11 +10,11 @@ import java.math.BigDecimal;
 import java.util.List;
 
 @Repository
-public class DateRepository {
+public class ReportRepository {
     @Autowired
     private final JdbcTemplate jdbcTemplate;
 
-    public DateRepository(JdbcTemplate jdbcTemplate) {
+    public ReportRepository(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
 
@@ -26,7 +26,7 @@ public class DateRepository {
         return jdbcTemplate.queryForList("SELECT DISTINCT DAY(date) FROM cost WHERE MONTH(date) = ?", new Object[]{month}, Integer.class);
     }
 
-    public BigDecimal maxSumOfDay(int month, int day) {
+    public BigDecimal sumOfDay(int month, int day) {
         return jdbcTemplate.queryForObject("SELECT SUM(value) FROM cost WHERE  DAY(date) = ? AND MONTH(date) = ? ", new Object[]{day, month}, BigDecimal.class);
     }
 

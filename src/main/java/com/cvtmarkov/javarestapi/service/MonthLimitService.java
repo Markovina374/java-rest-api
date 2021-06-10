@@ -30,6 +30,7 @@ public class MonthLimitService {
 
     public String limitMethod(long month) {
         MonthLimit monthLimit = monthLimitRepository.findById(month);
+
         BigDecimal sum = monthLimit.getSumOfMonth();
         if (sum.compareTo(limit) > 0 && limitMethod.equals("adaptive")) {
             List<MonthLimit> monthLimitList = monthLimitRepository.findAll();
