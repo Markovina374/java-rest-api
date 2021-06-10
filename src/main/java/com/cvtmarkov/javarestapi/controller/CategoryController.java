@@ -9,10 +9,10 @@ import java.math.BigDecimal;
 import java.util.List;
 
 /**
-  REST контроллер для работы с Категориями, принимает в себя:
-    @see CategoryRepository - репозиторий для работы с "категориями" в базы данных
+ * REST контроллер для работы с Категориями, принимает в себя:
+ *
+ * @see CategoryRepository - репозиторий для работы с "категориями" в базы данных
  */
-
 
 
 @RestController
@@ -28,6 +28,7 @@ public class CategoryController {
 
     /**
      * Возвращает список всех категорий
+     *
      * @return - список всех категорий
      */
     @GetMapping
@@ -36,8 +37,9 @@ public class CategoryController {
     }
 
     /**
-     *  Возвращает категорию по заданному полю
-     *  @param id - Идентификационный номер категории
+     * Возвращает категорию по заданному полю
+     *
+     * @param id - Идентификационный номер категории
      * @return - результат поиска
      */
     @GetMapping("{id}")
@@ -47,6 +49,7 @@ public class CategoryController {
 
     /**
      * Сохраняет категорию
+     *
      * @param category - новая категорию
      * @return - новая категория
      */
@@ -56,19 +59,21 @@ public class CategoryController {
     }
 
     /**
-     *  Обновляет выбранную категорию
-     * @param id - Идентификационный номер категории которую хотим обновить
+     * Обновляет выбранную категорию
+     *
+     * @param id       - Идентификационный номер категории которую хотим обновить
      * @param category - обновленная категория
      * @return - обновленная категория
      */
     @PutMapping("{id}")
     public Category updateCategory(@PathVariable("id") long id,
-                           @RequestBody Category category) {
+                                   @RequestBody Category category) {
         return categoryRepository.update(id, category);
     }
 
     /**
      * Удаляет выбранную категорию
+     *
      * @param id Идентификационный номер категории которую хотим удалить
      * @return - сообщение об удалении
      */
@@ -79,20 +84,22 @@ public class CategoryController {
 
     /**
      * Возвращает сумму расходов по определенной категории по дате
-     * @param id - Идентификационный номер категории которая нас интересует
-     * @param day - День расхода
+     *
+     * @param id    - Идентификационный номер категории которая нас интересует
+     * @param day   - День расхода
      * @param month - Месяц расхода
      * @return - сумма расходов
      */
     @GetMapping("{id}/sum/month{month}/day{day}")
     public BigDecimal amountOfExpensesOfCategoryForSelectedDate(@PathVariable("id") long id,
-                                           @PathVariable("month") int month,
-                                           @PathVariable("day") int day) {
+                                                                @PathVariable("month") int month,
+                                                                @PathVariable("day") int day) {
         return categoryRepository.sumOfCategoryOfDate(id, month, day);
     }
 
     /**
      * Возвращает общую сумму расходов по данной категории
+     *
      * @param id - Идентификационный номер категории которая нас интересует
      * @return сумма расходов по заданной категории
      */

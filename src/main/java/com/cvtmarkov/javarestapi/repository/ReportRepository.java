@@ -1,15 +1,15 @@
 package com.cvtmarkov.javarestapi.repository;
 
-import com.cvtmarkov.javarestapi.entity.Cost;
-import com.cvtmarkov.javarestapi.entity.mappers.CostMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import java.math.BigDecimal;
 import java.util.List;
+
 /**
  * Репозитория для работы с Категориями в базе данных принимающая:
+ *
  * @see JdbcTemplate
  */
 @Repository
@@ -23,6 +23,7 @@ public class ReportRepository {
 
     /**
      * Метод возвращает список дней в которые были сделаны расходы в данном методе
+     *
      * @param month - месяц
      * @return - список дней
      */
@@ -32,8 +33,9 @@ public class ReportRepository {
 
     /**
      * Метод возвращает сумму расходов за определенную дату
+     *
      * @param month - месяц
-     * @param day - день
+     * @param day   - день
      * @return - сумма
      */
     public BigDecimal sumOfDay(int month, int day) {
@@ -42,6 +44,7 @@ public class ReportRepository {
 
     /**
      * Метод возвращает сумму расходов за месяц
+     *
      * @param month - месяц
      * @return - сумма
      */
@@ -51,6 +54,7 @@ public class ReportRepository {
 
     /**
      * Метод возвращает номера месяцев в которые были сделаны расходы
+     *
      * @return - список месяцев
      */
     public List<Integer> findAllMonthsWhereExpensesWere() {

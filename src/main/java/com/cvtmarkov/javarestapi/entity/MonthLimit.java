@@ -3,6 +3,7 @@ package com.cvtmarkov.javarestapi.entity;
 import lombok.Data;
 
 import java.math.BigDecimal;
+
 /**
  * Объект "Месячный лимит"
  */

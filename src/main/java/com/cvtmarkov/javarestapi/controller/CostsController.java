@@ -1,7 +1,6 @@
 package com.cvtmarkov.javarestapi.controller;
 
 import com.cvtmarkov.javarestapi.entity.Cost;
-import com.cvtmarkov.javarestapi.repository.CategoryRepository;
 import com.cvtmarkov.javarestapi.repository.CostRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -10,8 +9,9 @@ import java.time.LocalDate;
 import java.util.List;
 
 /**
- REST контроллер для работы с расходами, принимает в себя:
- @see CostRepository - репозиторий для работы с "расходами" в базы данных
+ * REST контроллер для работы с расходами, принимает в себя:
+ *
+ * @see CostRepository - репозиторий для работы с "расходами" в базы данных
  */
 
 @RestController
@@ -27,6 +27,7 @@ public class CostsController {
 
     /**
      * Возвращает список всех расходов
+     *
      * @return - список всех расходов
      */
     @GetMapping
@@ -35,8 +36,9 @@ public class CostsController {
     }
 
     /**
-     *  Возвращает расход по ID
-     *  @param id - Идентификационный номер расхода
+     * Возвращает расход по ID
+     *
+     * @param id - Идентификационный номер расхода
      * @return - найденный расход
      */
     @GetMapping("{id}")
@@ -46,6 +48,7 @@ public class CostsController {
 
     /**
      * Сохраняет новый расход
+     *
      * @param cost - новый расход
      * @return - новый расход
      */
@@ -58,19 +61,21 @@ public class CostsController {
     }
 
     /**
-     *  Обновляет выбранный расход
-     * @param id - Идентификационный номер расхода который хотим обновить
+     * Обновляет выбранный расход
+     *
+     * @param id   - Идентификационный номер расхода который хотим обновить
      * @param cost - обновленный расход
      * @return - обновленный расход
      */
     @PutMapping("{id}")
     public Cost updateCost(@PathVariable("id") long id,
-                       @RequestBody Cost cost) {
+                           @RequestBody Cost cost) {
         return costRepository.update(id, cost);
     }
 
     /**
      * Удаляет выбранный расход
+     *
      * @param id Идентификационный номер расхода который хотим удалить
      * @return - сообщение при удалении
      */
@@ -81,8 +86,9 @@ public class CostsController {
 
     /**
      * Поиск расходов по определенной дате
+     *
      * @param month - месяц
-     * @param day - день
+     * @param day   - день
      * @return - список расходов в заданную дату
      */
     @GetMapping("month{month}/day{day}")

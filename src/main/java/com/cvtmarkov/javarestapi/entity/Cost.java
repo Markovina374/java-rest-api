@@ -3,17 +3,17 @@ package com.cvtmarkov.javarestapi.entity;
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+
 /**
  * Объект "Расход"
  */
 @Data
-public class Cost implements Serializable {
+public class Cost {
     private long Id;
     private BigDecimal value;
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @DateTimeFormat(pattern = "yyyy-mm-dd")
     private LocalDate date;
     private long categoryId;
 

@@ -13,6 +13,7 @@ import java.util.List;
 
 /**
  * Репозитория для работы с Категориями в базе данных - имплементирующая:
+ *
  * @see CRUDRepository - интерфейс
  * и принимающая:
  * @see JdbcTemplate
@@ -66,8 +67,9 @@ public class CategoryRepository implements CRUDRepository<Category> {
 
     /**
      * Метод возвращает список id категорий в заданной дате
+     *
      * @param month - месяц
-     * @param day - день
+     * @param day   - день
      * @return - список id
      */
     public List<Integer> findCategoryByDate(int month, int day) {
@@ -76,6 +78,7 @@ public class CategoryRepository implements CRUDRepository<Category> {
 
     /**
      * Метод возвращает сумму всех расходов по заданной категории
+     *
      * @param id - id категории
      * @return - сумма
      */
@@ -85,15 +88,15 @@ public class CategoryRepository implements CRUDRepository<Category> {
 
     /**
      * Метод возвращает сумму всех расходов по заданной категории и дате
-     * @param id - id категории
+     *
+     * @param id    - id категории
      * @param month - месяц
-     * @param day - день
+     * @param day   - день
      * @return - сумма
      */
     public BigDecimal sumOfCategoryOfDate(long id, int month, int day) {
         return jdbcTemplate.queryForObject("SELECT SUM(value) FROM cost WHERE  DAY(date) = ? AND MONTH(date) = ? AND category_id = ?", new Object[]{day, month, id}, BigDecimal.class);
     }
-
 
 
 }

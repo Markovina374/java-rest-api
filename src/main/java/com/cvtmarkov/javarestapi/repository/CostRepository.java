@@ -9,8 +9,10 @@ import org.springframework.stereotype.Repository;
 
 import javax.annotation.Nullable;
 import java.util.List;
+
 /**
  * Репозитория для работы с Расходами в базе данных - имплементирующая:
+ *
  * @see CRUDRepository - интерфейс
  * и принимающая:
  * @see JdbcTemplate
@@ -69,8 +71,9 @@ public class CostRepository implements CRUDRepository<Cost> {
 
     /**
      * Метод возвращает список расходов по заданной дате
+     *
      * @param month - месяц
-     * @param day - день
+     * @param day   - день
      * @return - список Расходов
      */
     public List<Cost> findCostFromDate(int month, int day) {

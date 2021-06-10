@@ -5,6 +5,7 @@ import org.springframework.jdbc.core.RowMapper;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+
 /**
  * Сопоставление объекта "Расход" с сущностью в базе данных
  */

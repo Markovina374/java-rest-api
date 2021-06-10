@@ -12,8 +12,10 @@ import org.springframework.stereotype.Repository;
 import javax.annotation.Nullable;
 import java.math.BigDecimal;
 import java.util.List;
+
 /**
  * Репозитория для работы с Месячными расходами в базе данных - имплементирующая:
+ *
  * @see CRUDRepository - интерфейс
  * и принимающая:
  * @see JdbcTemplate
@@ -41,8 +43,13 @@ public class MonthLimitRepository implements CRUDRepository<MonthLimit> {
 
     @Override
     public List<MonthLimit> findAll() {
-        return jdbcTemplate.query("SELECT * FROM month_limit",
+        List<MonthLimit> limits = jdbcTemplate.query("SELECT * FROM month_limit",
                 new Object[]{}, new MonthLimitMapper());
+        for (MonthLimit limit : limits
+        ) {
+            limit.setSumOfMonth(reportRepository.sumOfMonth(limit.getMonth()));
+        }
+        return limits;
     }
 
     @Override
@@ -68,7 +75,7 @@ public class MonthLimitRepository implements CRUDRepository<MonthLimit> {
     public MonthLimit save(MonthLimit limit) {
 
         limit.setLimit(monthLimitService.getLimitFromProperty());
-        if(reportRepository.sumOfMonth(limit.getMonth())!=null) {
+        if (reportRepository.sumOfMonth(limit.getMonth()) != null) {
             limit.setSumOfMonth(reportRepository.sumOfMonth(limit.getMonth()));
         }
         jdbcTemplate.update("INSERT INTO month_limit VALUES(?,?,?)",
@@ -79,12 +86,20 @@ public class MonthLimitRepository implements CRUDRepository<MonthLimit> {
     @Override
     public MonthLimit update(long month, @Nullable MonthLimit limit) {
         limit.setMonth((int) month);
+        limit.setSumOfMonth(reportRepository.sumOfMonth(limit.getMonth()));
         if (limitMethod.equals("adaptive")) {
             limit.setLimit(monthLimitService.getLimitFromProperty());
         }
         jdbcTemplate.update("UPDATE month_limit SET sum_of_month = ?, limit_of_month = ? WHERE numberMonth = ?",
-                reportRepository.sumOfMonth(limit.getMonth()), limit.getLimit(), month);
+                limit.getSumOfMonth(), limit.getLimit(), month);
         return limit;
+    }
+
+    public void updateForService(long month, @Nullable MonthLimit limit) {
+        limit.setMonth((int) month);
+        jdbcTemplate.update("UPDATE month_limit SET sum_of_month = ?, limit_of_month = ? WHERE numberMonth = ?",
+                reportRepository.sumOfMonth(limit.getMonth()), limit.getLimit(), month);
+
     }
 
 

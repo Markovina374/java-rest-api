@@ -34,6 +34,7 @@ public class MonthLimitService {
 
     /**
      * Метод аналогичен getter'у возвращает значение переменной лимит который указан в проперти файле
+     *
      * @return - лимит
      */
     public BigDecimal getLimitFromProperty() {
@@ -44,6 +45,7 @@ public class MonthLimitService {
      * Метод проверяет на превышение месячного лимита и если он превышен -
      * производит манипуляции с месячным лимитом согласно заданному методу действий
      * и выводит соответствующее сообщение
+     *
      * @param month - месяц
      * @return - сообщение
      */
@@ -63,7 +65,7 @@ public class MonthLimitService {
             if (searchIndex == 12) searchIndex = 0;
             MonthLimit nextMonthLimit = monthLimitList.get(searchIndex);
             nextMonthLimit.setLimit(value);
-            monthLimitRepository.update(nextMonthLimit.getMonth(), nextMonthLimit);
+            monthLimitRepository.updateForService(nextMonthLimit.getMonth(), nextMonthLimit);
             return "Because of exceeding the limit value of the limit for the next month is reduced to" + value;
         } else if (monthLimit.getSumOfMonth().compareTo(limit) > 0 && limitMethod.equals("increase")) {
             return "Your limit value is increased by the given one = " + monthLimit.getLimit() + " ! You can increase the limit on request PUT /rest/monthLimit/{month}";
@@ -75,23 +77,26 @@ public class MonthLimitService {
 
     /**
      * Метод проверяет на превышение месячного лимита всех месяцев и если он превышен -
-     *      * производит манипуляции с месячным лимитом согласно заданному методу действий
-     *      * и выводит соответствующее сообщение
+     * * производит манипуляции с месячным лимитом согласно заданному методу действий
+     * * и выводит соответствующее сообщение
+     *
      * @return - сообщение
      */
-    public List<HashMap<String, String>> checkAllMonthForLimit(){
+    public List<HashMap<String, String>> checkAllMonthForLimit() {
         List<MonthLimit> limitList = monthLimitRepository.findAll();
         List<HashMap<String, String>> hashMapList = new ArrayList<>();
         HashMap<String, String> oneMonthLimit = new HashMap<>();
-        if(limitMethod.equals("adaptive") && limitList.size()<11){
-            oneMonthLimit.put("Error","Your monthly limits are not completely filled, please fill in and try again, or change the limit.method");
+        if (limitMethod.equals("adaptive") && limitList.size() < 11) {
+            oneMonthLimit.put("Error", "Your monthly limits are not completely filled, please fill in and try again, or change the limit.method");
             hashMapList.add(oneMonthLimit);
             return hashMapList;
-        }else { for (MonthLimit limit : limitList) {
+        } else {
+            for (MonthLimit limit : limitList) {
                 oneMonthLimit.put("Month = " + limit.getMonth(), limitMethod(limit.getMonth()));
             }
             hashMapList.add(oneMonthLimit);
-        } return hashMapList;
+        }
+        return hashMapList;
     }
 
 

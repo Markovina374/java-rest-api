@@ -14,9 +14,10 @@ import java.util.List;
 
 
 /**
- REST контроллер для составления детального отчёта.
- принимает в себя:
- @see ReportService - сервис в котором производится работа над детальным отчетом
+ * REST контроллер для составления детального отчёта.
+ * принимает в себя:
+ *
+ * @see ReportService - сервис в котором производится работа над детальным отчетом
  */
 @RestController
 @RequestMapping("rest/costs/month")
@@ -32,6 +33,7 @@ public class ReportController {
 
     /**
      * Возвращает общий отчет за все месяцы, показывая месяц и общую сумму расходов
+     *
      * @return - общий отчет
      */
     @GetMapping
@@ -41,6 +43,7 @@ public class ReportController {
 
     /**
      * Предоставляет детальный отчет за месяц
+     *
      * @param month - месяц который нас интересует
      * @return - детальный отчет за месяц
      */
@@ -48,8 +51,6 @@ public class ReportController {
     public List<Report> monthlyReport(@PathVariable("month") int month) {
         return reportService.monthlyDetailedReport(month);
     }
-
-
 
 
 }

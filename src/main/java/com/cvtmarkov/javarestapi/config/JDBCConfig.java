@@ -12,7 +12,7 @@ import javax.sql.DataSource;
 /**
  * Класс конфигураций для подключения к базе данных,
  * который берёт нужные значения из application.properties
- *  */
+ */
 
 @Configuration
 @PropertySource("classpath:application.properties")
@@ -28,8 +28,10 @@ public class JDBCConfig {
     private String password;
 
 
-    /** @see JdbcTemplate - это класс который выполняет основной рабочий процесс JDBC,
-     *  оставляя код приложения для предоставления SQL и извлечения результатов. */
+    /**
+     * @see JdbcTemplate - это класс который выполняет основной рабочий процесс JDBC,
+     * оставляя код приложения для предоставления SQL и извлечения результатов.
+     */
     @Bean
     JdbcTemplate jdbcTemplate(DataSource dataSource) {
         return new JdbcTemplate(dataSource);
